@@ -1,1 +1,48 @@
-<p>rooms works!</p>
+<section class="filter-container">
+  <button mat-raised-button>View All ({{totalRooms}})</button>
+  <button mat-raised-button>Single Rooms ()</button>
+  <button mat-raised-button>Double Rooms ()</button>
+  <button mat-raised-button>Deluxe Rooms ()</button>
+  <button mat-raised-button>Suites ()</button>
+  <button mat-raised-button>Presidential Suites ()</button>
+</section>
+
+<section class="card-list-container">
+  <ng-container *ngIf="totalRooms; else emptyList">
+    <mat-card *ngFor="let room of roomList" class="card-item">
+      <mat-card-header>
+        <mat-card-title>{{ room.roomType }}</mat-card-title>
+        <mat-card-subtitle>€{{ room.price }} per night</mat-card-subtitle>
+      </mat-card-header>
+
+      <div class="divider">
+        <div></div>
+        <mat-icon>spa</mat-icon>
+        <div></div>
+      </div>
+
+      <mat-card-content>
+        <img mat-card-image src="./../../../assets/room-pictures/Deluxe Room-2.jpg"
+          alt="Photo of the White Lotus hotel room">
+        <main>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas lectus at odio ullamcorper, non
+            mollis
+            enim mollis. Sed et imperdiet nisl, quis posuere nunc. Fusce euismod faucibus felis, nec gravida neque
+            tincidunt quis.
+          </p>
+          <mat-card-actions>
+            <button mat-button (click)="openDetailsDialog(room)">ROOM DETAILS</button>
+          </mat-card-actions>
+        </main>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</section>
+
+<mat-paginator *ngIf="totalRooms" [length]="totalRooms" [pageSize]="4" (page)="changePage($event)"
+  aria-label="Select page"></mat-paginator>
+
+<ng-template #emptyList>
+  <p>No room registered at the moment</p>
+</ng-template>
