@@ -1,0 +1,17 @@
+<header>
+  <h2>Details for {{roomType}}</h2>
+</header>
+
+<main>
+  <p>€{{roomPrice}} per night</p>
+  <p>Room Number: {{roomNumber}}</p>
+  <p *ngIf="reservedBy; else noReservation">Reserved by: {{reservedBy.firstName}} {{reservedBy.lastName}}</p>
+
+  <ng-template #noReservation>
+    <p>Reserved by: Still available</p>
+  </ng-template>
+</main>
+
+<footer>
+  <button mat-button (click)="closeDialog()">CLOSE</button>
+</footer>
