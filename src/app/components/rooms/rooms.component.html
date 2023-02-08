@@ -1,10 +1,12 @@
 <section class="filter-container">
-  <button mat-raised-button>View All ({{totalRooms}})</button>
-  <button mat-raised-button>Single Rooms ()</button>
-  <button mat-raised-button>Double Rooms ()</button>
-  <button mat-raised-button>Deluxe Rooms ()</button>
-  <button mat-raised-button>Suites ()</button>
-  <button mat-raised-button>Presidential Suites ()</button>
+  <button mat-raised-button (click)="filterList('ALL')">View All ({{totalRooms}})</button>
+  <button mat-raised-button (click)="filterList('Single Room')">Single Rooms ({{singleRoomsTotal}})</button>
+  <button mat-raised-button (click)="filterList('Double Room')">Double Rooms ({{doubleRoomsTotal}})</button>
+  <button mat-raised-button (click)="filterList('Deluxe Room')">Deluxe Rooms ({{deluxeRoomsTotal}})</button>
+  <button mat-raised-button (click)="filterList('Suite')">Suites ({{suitesTotal}})</button>
+  <button mat-raised-button (click)="filterList('Presidential Suite')">
+    Presidential Suites ({{presidentialSuitesTotal}})
+  </button>
 </section>
 
 <section class="card-list-container">
@@ -40,7 +42,7 @@
   </ng-container>
 </section>
 
-<mat-paginator *ngIf="totalRooms" [length]="totalRooms" [pageSize]="4" (page)="changePage($event)"
+<mat-paginator *ngIf="totalRooms" [length]="currentTotalRooms" [pageSize]="4" (page)="changePage($event)"
   aria-label="Select page"></mat-paginator>
 
 <ng-template #emptyList>
