@@ -1,1 +1,12 @@
 <app-header></app-header>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="sidenav" mode="side" opened>
+    <div class="sidenav-item" routerLink="/">Home</div>
+    <div class="sidenav-item" routerLink="/rooms">Rooms</div>
+    <div class="sidenav-item" routerLink="/reports">Reports</div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
