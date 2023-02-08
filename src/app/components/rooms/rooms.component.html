@@ -42,8 +42,10 @@
   </ng-container>
 </section>
 
-<mat-paginator *ngIf="totalRooms" [length]="currentTotalRooms" [pageSize]="4" (page)="changePage($event)"
-  aria-label="Select page"></mat-paginator>
+<div class="paginator-container">
+  <mat-paginator *ngIf="totalRooms" [length]="currentTotalRooms" [pageSize]="4" (page)="changePage($event)"
+    aria-label="Select page"></mat-paginator>
+</div>
 
 <ng-template #emptyList>
   <p>No room registered at the moment</p>

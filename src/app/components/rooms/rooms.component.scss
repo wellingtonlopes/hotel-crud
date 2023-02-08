@@ -1,5 +1,7 @@
 :host {
-  display: block;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   padding: 50px;
 }
 
@@ -8,7 +10,8 @@
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-top: 30px;
+  margin-bottom: 80px;
 }
 
 .card-list-container {
@@ -16,7 +19,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  justify-content: space-evenly;
+  justify-content: center;
 
   .card-item {
     align-items: center;
@@ -108,7 +111,14 @@
   }
 }
 
-mat-paginator {
-  background-color: #fafafa;
-  margin-top: 15px;
+.paginator-container {
+  display: flex;
+  justify-content: end;
+  width: 1230px;
+  min-width: 600px;
+
+  mat-paginator {
+    background-color: antiquewhite;
+    margin-top: 15px;
+  }
 }

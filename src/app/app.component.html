@@ -2,9 +2,16 @@
 
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav class="sidenav" mode="side" opened>
-    <div class="sidenav-item" routerLink="/">Home</div>
-    <div class="sidenav-item" routerLink="/rooms">Rooms</div>
-    <div class="sidenav-item" routerLink="/reports">Reports</div>
+    <div class="lotus-divider">
+      <div></div>
+      <mat-icon>spa</mat-icon>
+      <div></div>
+    </div>
+    <div class="sidenav-item" routerLink="/">Hotel Overview</div>
+    <div class="divider"></div>
+    <div class="sidenav-item" routerLink="/rooms">Accomodations</div>
+    <div class="divider"></div>
+    <div class="sidenav-item" routerLink="/reports">Hotel Status</div>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

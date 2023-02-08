@@ -7,16 +7,44 @@
 }
 
 .sidenav {
-  align-items: center;
-  background: rgba(255, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.87);
+  color: #fafafa;
   width: 200px;
 
   &-item {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
   }
+
+  .lotus-divider {
+    align-items: center;
+    display: flex;
+    margin: 30px 10% 30px 10%;
+    width: 80%;
+
+    div {
+      border-top: solid grey 1px;
+      width: 40%;
+
+      &:first-child {
+        margin-right: 5%;
+      }
+
+      &:last-child {
+        margin-left: 5%;
+      }
+    }
+  }
+
+  .divider {
+    border-top: solid 1px gray;
+    width: 40%;
+    margin: 20px 30%;
+  }
+}
+
+mat-sidenav-content {
+  background-color: antiquewhite;
 }
