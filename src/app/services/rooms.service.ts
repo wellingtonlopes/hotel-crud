@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, reduce, throwError } from 'rxjs';
-import { MOCKED_ROOMS } from '../components/shared/mock-database';
+import { from, Observable } from 'rxjs';
+
+import { MOCKED_ROOMS } from '../shared/mock-database';
 import { RoomInterface, RoomResponseInterface, RoomTypeEnum } from '../interfaces/room.interface';
 
 @Injectable({
