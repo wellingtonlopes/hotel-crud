@@ -1,0 +1,28 @@
+.home-container {
+  background-color: rgba(0, 0, 0, .87);
+  color: #fafafa;
+  height: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.cover-image-container {
+  max-height: 93vh;
+  overflow: hidden;
+  width: 100%;
+
+  img {
+    object-fit: cover;
+    width: 100vw;
+  }
+}
+
+.greetings-container {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .3));
+  bottom: 5vh;
+  left: 1vw;
+  padding: 5px 15px;
+  position: absolute;
+  text-align: left;
+  width: 50vw;
+}
