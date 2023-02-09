@@ -1,0 +1,48 @@
+main {
+  align-items: center;
+  color: #fafafa;
+  display: flex;
+  justify-content: center;
+
+  .details-container {
+    align-items: center;
+    background-color: rgba(0, 0, 0, .87);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 50vh;
+    width: 40vw;
+  }
+
+  .lotus-divider {
+    align-items: center;
+    display: flex;
+    margin: 30px 10%;
+    width: 80%;
+
+    div {
+      border-top: solid grey 1px;
+      width: 40%;
+
+      &:first-child {
+        margin-right: 10%;
+      }
+
+      &:last-child {
+        margin-left: 10%;
+      }
+    }
+  }
+
+  .content-container {
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 60px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
