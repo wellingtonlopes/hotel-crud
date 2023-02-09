@@ -1,9 +1,9 @@
-import { ClientInterface } from "src/app/interfaces/client.interface";
+import { ClientResponse } from "src/app/interfaces/client.interface";
 import { ReservationInterface } from "src/app/interfaces/reservation.interface";
 import { RoomInterface, RoomTypeEnum } from "src/app/interfaces/room.interface";
 
-const clients: ClientInterface[] = [
-  {
+const clientsPage1: ClientResponse = {
+  clientList: [{
     clientId: 1,
     firstName: 'Maui',
     lastName: 'Lopes-Pinheiro',
@@ -32,8 +32,12 @@ const clients: ClientInterface[] = [
     firstName: 'Joel',
     lastName: 'Miller',
     email: 'joel@email.com'
-  },
-  {
+  }],
+  totalCount: 7
+};
+
+const clientsPage2: ClientResponse = {
+  clientList: [{
     clientId: 6,
     firstName: 'Ellie',
     lastName: 'Williams',
@@ -44,8 +48,9 @@ const clients: ClientInterface[] = [
     firstName: 'John',
     lastName: 'Halo',
     email: 'john@email.com'
-  }
-];
+  }],
+  totalCount: 7
+};
 
 
 const reservations: ReservationInterface[] = [
@@ -55,7 +60,7 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[0]
+    reservedBy: clientsPage1.clientList[0]
   },
   {
     reservationId: 2,
@@ -63,7 +68,7 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[1]
+    reservedBy: clientsPage1.clientList[1]
   },
   {
     reservationId: 3,
@@ -71,7 +76,7 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[2]
+    reservedBy: clientsPage1.clientList[2]
   },
   {
     reservationId: 4,
@@ -79,7 +84,7 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[3]
+    reservedBy: clientsPage1.clientList[3]
   },
   {
     reservationId: 5,
@@ -87,7 +92,7 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[4]
+    reservedBy: clientsPage1.clientList[4]
   },
   {
     reservationId: 6,
@@ -95,7 +100,7 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[5]
+    reservedBy: clientsPage2.clientList[0]
   },
   {
     reservationId: 7,
@@ -103,7 +108,15 @@ const reservations: ReservationInterface[] = [
     canceledReservationAt: null,
     checkedInAt: null,
     checkedOutAt: null,
-    reservedBy: clients[6]
+    reservedBy: clientsPage2.clientList[1]
+  },
+  {
+    reservationId: 8,
+    reservationDoneAt: new Date(),
+    canceledReservationAt: null,
+    checkedInAt: null,
+    checkedOutAt: null,
+    reservedBy: clientsPage2.clientList[0]
   }
 ];
 
@@ -182,4 +195,5 @@ const rooms: RoomInterface[][] = [
 
 export const MOCKED_ROOMS = JSON.stringify(rooms);
 export const MOCKED_RESERVATIONS = JSON.stringify(reservations);
-export const MOCKED_CLIENTS = JSON.stringify(clients);
+export const MOCKED_CLIENTS_PAGE_1 = JSON.stringify(clientsPage1);
+export const MOCKED_CLIENTS_PAGE_2 = JSON.stringify(clientsPage2);

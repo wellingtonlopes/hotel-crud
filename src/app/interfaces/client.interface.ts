@@ -4,3 +4,8 @@ export interface ClientInterface {
   lastName: string;
   email: string;
 }
+
+export interface ClientResponse {
+  clientList: ClientInterface[],
+  totalCount: number
+}
