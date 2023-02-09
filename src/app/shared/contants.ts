@@ -4,6 +4,7 @@ export class Constants {
     ROOMS: 'rooms',
     REPORTS: 'reports',
     CLIENTS: 'clients',
+    RESERVATIONS: 'reservations',
     ID_PARAMETER: ":id"
   };
 

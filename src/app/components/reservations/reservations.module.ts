@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { ReservationsComponent } from './reservations.component';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import { reservationRouter } from './reservations.router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -17,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     SharedComponentsModule,
     MatTableModule,
-    CommonModule
+    reservationRouter,
     MatIconModule,
     MatButtonModule,
   ]
