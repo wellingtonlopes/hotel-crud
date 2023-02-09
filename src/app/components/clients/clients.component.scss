@@ -11,15 +11,11 @@ main {
   justify-content: center;
 
   table {
-    width: 80vw;
 
-    .mat-header-cell {
-      background-color: rgba(0, 0, 0, .87);
-      color: #fafafa;
-    }
-
+    .mat-header-cell,
     .mat-cell {
-      cursor: pointer;
+      padding-left: 24px;
+
     }
   }
 }
