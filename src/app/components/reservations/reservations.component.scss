@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  table {
+
+    .mat-header-cell,
+    .mat-cell {
+      padding-left: 24px;
+
+      &:last-child {
+        text-align: center;
+      }
+    }
+
+    .mat-cell:last-child {
+      cursor: initial;
+    }
+  }
+}
