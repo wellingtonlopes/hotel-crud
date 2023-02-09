@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: Constants.PATH.REPORTS,
     loadChildren: () => import('./components/reports/reports.module').then((m) => m.ReportsModule)
+  },
+  {
+    path: Constants.PATH.CLIENTS,
+    loadChildren: () => import('./components/clients/clients.module').then((m) => m.ClientsModule)
   }
 ];
 

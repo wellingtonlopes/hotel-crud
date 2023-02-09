@@ -1,1 +1,33 @@
-<p>clients works!</p>
+<app-inner-header title="Clients with a reservation"></app-inner-header>
+
+<main>
+  <section class="client-list-container">
+    <table mat-table [dataSource]="clientsDataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID No. </th>
+        <td mat-cell *matCellDef="let element" (click)="goToElementDetails(element.clientId)"> {{element.clientId}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="first-name">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element" (click)="goToElementDetails(element.clientId)"> {{element.firstName}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="last-name">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element" (click)="goToElementDetails(element.clientId)"> {{element.lastName}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="paginator-container">
+      <mat-paginator *ngIf="totalCount" [length]="totalCount" [pageSize]="5" (page)="changePage($event)"
+        aria-label="Select page"></mat-paginator>
+    </div>
+  </section>
+</main>
