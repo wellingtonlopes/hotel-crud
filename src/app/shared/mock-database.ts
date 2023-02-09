@@ -1,5 +1,5 @@
 import { ClientResponse } from "src/app/interfaces/client.interface";
-import { ReservationInterface } from "src/app/interfaces/reservation.interface";
+import { ReservationResponse } from "src/app/interfaces/reservation.interface";
 import { RoomInterface, RoomTypeEnum } from "src/app/interfaces/room.interface";
 
 const clientsPage1: ClientResponse = {
@@ -52,9 +52,8 @@ const clientsPage2: ClientResponse = {
   totalCount: 7
 };
 
-
-const reservations: ReservationInterface[] = [
-  {
+const reservationsPage1: ReservationResponse = {
+  reservationList: [{
     reservationId: 1,
     reservationDoneAt: new Date(),
     canceledReservationAt: null,
@@ -93,8 +92,12 @@ const reservations: ReservationInterface[] = [
     checkedInAt: null,
     checkedOutAt: null,
     reservedBy: clientsPage1.clientList[4]
-  },
-  {
+  }],
+  totalCount: 8
+};
+
+const reservationsPage2: ReservationResponse = {
+  reservationList: [{
     reservationId: 6,
     reservationDoneAt: new Date(),
     canceledReservationAt: null,
@@ -117,83 +120,85 @@ const reservations: ReservationInterface[] = [
     checkedInAt: null,
     checkedOutAt: null,
     reservedBy: clientsPage2.clientList[0]
-  }
-];
+  }],
+  totalCount: 8
+};
 
 const rooms: RoomInterface[][] = [
   [{
     roomId: 1,
     roomNumber: 101,
     roomType: RoomTypeEnum.SINGLE_ROOM,
-    reservation: reservations[6],
+    reservation: [reservationsPage2.reservationList[1]],
     price: 250
   },
   {
     roomId: 2,
     roomNumber: 102,
     roomType: RoomTypeEnum.SINGLE_ROOM,
-    reservation: reservations[4],
+    reservation: [reservationsPage1.reservationList[4]],
     price: 250
   },
   {
     roomId: 3,
     roomNumber: 103,
     roomType: RoomTypeEnum.DOUBLE_ROOM,
-    reservation: reservations[5],
+    reservation: [reservationsPage1.reservationList[0]],
     price: 350
   },
   {
     roomId: 4,
     roomNumber: 104,
     roomType: RoomTypeEnum.DOUBLE_ROOM,
-    reservation: null,
+    reservation: [],
     price: 350
   }],
   [{
     roomId: 5,
     roomNumber: 201,
     roomType: RoomTypeEnum.DELUXE_ROOM,
-    reservation: reservations[2],
+    reservation: [reservationsPage1.reservationList[2]],
     price: 500
   },
   {
     roomId: 6,
     roomNumber: 202,
     roomType: RoomTypeEnum.DELUXE_ROOM,
-    reservation: reservations[3],
+    reservation: [reservationsPage1.reservationList[3]],
     price: 500
   },
   {
     roomId: 7,
     roomNumber: 203,
     roomType: RoomTypeEnum.DELUXE_ROOM,
-    reservation: null,
+    reservation: [],
     price: 500
   },
   {
     roomId: 8,
     roomNumber: 301,
     roomType: RoomTypeEnum.SUITE,
-    reservation: null,
+    reservation: [],
     price: 900
   }],
   [{
     roomId: 9,
     roomNumber: 302,
     roomType: RoomTypeEnum.SUITE,
-    reservation: reservations[0],
+    reservation: [reservationsPage1.reservationList[0]],
     price: 900
   },
   {
     roomId: 10,
     roomNumber: 401,
     roomType: RoomTypeEnum.PRESIDENTIAL_SUITE,
-    reservation: reservations[1],
+    reservation: [reservationsPage1.reservationList[1]],
     price: 1500
   }]
 ];
 
 export const MOCKED_ROOMS = JSON.stringify(rooms);
-export const MOCKED_RESERVATIONS = JSON.stringify(reservations);
+export const MOCKED_RESERVATIONS_PAGE_1 = JSON.stringify(reservationsPage1);
+export const MOCKED_RESERVATIONS_PAGE_2 = JSON.stringify(reservationsPage2);
 export const MOCKED_CLIENTS_PAGE_1 = JSON.stringify(clientsPage1);
 export const MOCKED_CLIENTS_PAGE_2 = JSON.stringify(clientsPage2);

@@ -40,7 +40,7 @@ export class RoomsComponent implements OnInit {
       data: {
         roomNumber: room.roomNumber,
         roomPrice: room.price,
-        reservedBy: room.reservation?.reservedBy,
+        reservedBy: room.reservation.length > 0 ? room.reservation[0].reservedBy : '',
         roomType: room.roomType
       }
     });

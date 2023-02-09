@@ -8,3 +8,8 @@ export interface ReservationInterface {
   canceledReservationAt: Date | null;
   reservedBy: ClientInterface;
 }
+
+export interface ReservationResponse {
+  reservationList: ReservationInterface[],
+  totalCount: number
+}
