@@ -41,7 +41,7 @@
     }
 
     .divider {
-      align-self: end;
+      align-self: flex-end;
       align-items: center;
       display: flex;
       margin-bottom: -12px;
@@ -63,7 +63,7 @@
     }
 
     .mat-card-content {
-      align-items: end;
+      align-items: flex-end;
       display: flex;
       justify-content: space-between;
 
