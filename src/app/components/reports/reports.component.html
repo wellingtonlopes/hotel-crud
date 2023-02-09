@@ -1,1 +1,12 @@
-<p>reports works!</p>
+<header>
+  <h1>Hotel Status Report</h1>
+  <h3>The chart below shows the hotel's rooms statuses for the past 3/6/12 months</h3>
+</header>
+
+<main>
+  <div class="chart-container">
+    <canvas id="room-chart" baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+      [legend]="barChartLegend" [type]="'bar'">
+    </canvas>
+  </div>
+</main>
