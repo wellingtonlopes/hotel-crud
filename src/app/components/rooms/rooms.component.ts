@@ -22,11 +22,12 @@ export class RoomsComponent implements OnInit {
   public deluxeRoomsTotal!: number;
   public suitesTotal!: number;
   public presidentialSuitesTotal!: number;
+  public readonly pageSize = 4;
 
   constructor(private roomsService: RoomsService, private dialog: MatDialog) { }
 
   public ngOnInit(): void {
-    this.getRoomsByPage(Constants.FIRST_PAGE);
+    this.getPaginatedRooms(Constants.FIRST_PAGE);
     this.roomsService.getRoomQuantity(RoomTypeEnum.SINGLE_ROOM).pipe(first()).subscribe(response => this.singleRoomsTotal = response);
     this.roomsService.getRoomQuantity(RoomTypeEnum.DOUBLE_ROOM).pipe(first()).subscribe(response => this.doubleRoomsTotal = response);
     this.roomsService.getRoomQuantity(RoomTypeEnum.DELUXE_ROOM).pipe(first()).subscribe(response => this.deluxeRoomsTotal = response);
@@ -45,8 +46,8 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  public changePage(event: PageEvent): void {
-    this.getRoomsByPage(event.pageIndex);
+  public changePage(event: number): void {
+    this.getPaginatedRooms(event);
   }
 
   public filterList(filterBy: string) {
@@ -56,7 +57,7 @@ export class RoomsComponent implements OnInit {
     })
   }
 
-  private getRoomsByPage(pageIndex: number) {
+  private getPaginatedRooms(pageIndex: number) {
     this.roomsService.getRooms(pageIndex).pipe(first()).subscribe(response => {
       this.roomList = response.roomList;
       this.totalRooms = response.totalCount;

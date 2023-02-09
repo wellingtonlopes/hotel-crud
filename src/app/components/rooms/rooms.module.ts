@@ -4,12 +4,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { RoomsComponent } from './rooms.component';
 import { roomsRouter } from './rooms.router';
 import { RoomDetailsDialogComponent } from './room-details-dialog/room-details-dialog.component';
 import { RoomsService } from 'src/app/services/rooms.service';
+import { SharedComponentsModule } from '../shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { RoomsService } from 'src/app/services/rooms.service';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
-    MatPaginatorModule,
+    SharedComponentsModule,
   ],
   providers: [
     RoomsService

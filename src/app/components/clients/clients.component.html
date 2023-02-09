@@ -25,9 +25,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <div class="paginator-container">
-      <mat-paginator *ngIf="totalCount" [length]="totalCount" [pageSize]="5" (page)="changePage($event)"
-        aria-label="Select page"></mat-paginator>
-    </div>
+    <app-custom-paginator *ngIf="totalCount" [currentTotalCount]="totalCount" [pageSize]="pageSize"
+      (onChangePage)="changePage($event)"></app-custom-paginator>
   </section>
 </main>

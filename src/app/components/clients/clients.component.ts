@@ -17,6 +17,7 @@ export class ClientsComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'first-name', 'last-name'];
   public clientsDataSource = new ClientsSource();
   public totalCount!: number;
+  public readonly pageSize = 5;
 
   private clientList!: ClientInterface[];
 
@@ -26,8 +27,8 @@ export class ClientsComponent implements OnInit {
     this.getPaginatedClients(Constants.FIRST_PAGE);
   }
 
-  public changePage(event: PageEvent): void {
-    this.getPaginatedClients(event.pageIndex);
+  public changePage(event: number): void {
+    this.getPaginatedClients(event);
   }
 
   public goToElementDetails(clientId: number): void {

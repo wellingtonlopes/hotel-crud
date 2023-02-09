@@ -110,15 +110,3 @@
     width: 100%;
   }
 }
-
-.paginator-container {
-  display: flex;
-  justify-content: end;
-  width: 1230px;
-  min-width: 600px;
-
-  mat-paginator {
-    background-color: antiquewhite;
-    margin-top: 15px;
-  }
-}
