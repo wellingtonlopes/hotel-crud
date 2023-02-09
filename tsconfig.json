@@ -27,6 +27,8 @@
       "node_modules/@angular",
       "node_modules/@angular/common/http",
     ],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

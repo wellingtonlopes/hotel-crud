@@ -9,6 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RoomsComponent } from './rooms.component';
 import { roomsRouter } from './rooms.router';
 import { RoomDetailsDialogComponent } from './room-details-dialog/room-details-dialog.component';
+import { RoomsService } from 'src/app/services/rooms.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,9 @@ import { RoomDetailsDialogComponent } from './room-details-dialog/room-details-d
     MatButtonModule,
     MatDialogModule,
     MatPaginatorModule,
+  ],
+  providers: [
+    RoomsService
   ]
 })
 
