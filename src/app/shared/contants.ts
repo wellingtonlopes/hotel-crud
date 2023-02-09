@@ -3,5 +3,9 @@ export class Constants {
     HOME: '',
     ROOMS: 'rooms',
     REPORTS: 'reports',
+    CLIENTS: 'clients',
+    ID_PARAMETER: ":id"
   };
+
+  public static readonly FIRST_PAGE = 0;
 }
