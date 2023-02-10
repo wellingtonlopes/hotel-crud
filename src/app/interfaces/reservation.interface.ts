@@ -3,8 +3,10 @@ import { ClientInterface } from "./client.interface"
 export interface ReservationInterface {
   reservationId: number;
   reservationDoneAt: Date;
-  checkedInAt: Date | null;
-  checkedOutAt: Date | null;
+  checkInAt: Date | null;
+  hasCheckedIn: boolean;
+  checkOutAt: Date | null;
+  hasCheckedOut: boolean;
   canceledReservationAt: Date | null;
   reservedBy: ClientInterface;
 }

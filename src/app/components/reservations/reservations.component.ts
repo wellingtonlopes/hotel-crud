@@ -17,7 +17,7 @@ export class ReservationsComponent implements OnInit {
   public totalCount!: number;
   public readonly pageSize = 5;
   public readonly hasAddFunctionality = true;
-  public readonly displayedColumns: string[] = ['id', 'reserved-by', 'reserved-at', 'actions'];
+  public readonly displayedColumns: string[] = ['id', 'reserved-by', 'reserved-at', 'status', 'actions'];
 
   private reservationList!: ReservationInterface[];
 
@@ -33,6 +33,30 @@ export class ReservationsComponent implements OnInit {
 
   public goToElementDetails(reservationId: number): void {
     this.router.navigate([`${Constants.PATH.RESERVATIONS}/${reservationId}`]);
+  }
+
+  public getReservationStatus(element: ReservationInterface): string {
+    let status: string | undefined = '';
+    const hasCanceled = element.canceledReservationAt !== null;
+    const possibleStatusMap = new Map<string, string>([
+      ['hasCheckedIn', 'Checked In'],
+      ['hasCheckedOut', 'Checked Out'],
+    ]);
+
+    Object.keys(element).forEach(key => {
+      if (element[key as keyof ReservationInterface] === true) {
+        status = key;
+      }
+    });
+
+    if (status === '' && hasCanceled) {
+      return 'Canceled';
+    } else if (status === '') {
+      return 'Ok'
+    }
+
+    status = possibleStatusMap.get(status);
+    return status ? status : '';
   }
 
   public deleteElement(reservationId: number): void {

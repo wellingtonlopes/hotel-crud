@@ -16,8 +16,10 @@ main {
     .mat-cell {
       padding-left: 24px;
 
-      &:last-child {
+      &:last-child,
+      &:nth-last-child(2) {
         text-align: center;
+        padding: 0;
       }
     }
 
