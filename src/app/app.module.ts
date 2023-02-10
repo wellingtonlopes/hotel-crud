@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
+import { SharedComponentsModule } from './components/shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HomeComponent } from './components/home/home.component';
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
+    SharedComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

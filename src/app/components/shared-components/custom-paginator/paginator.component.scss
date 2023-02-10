@@ -1,0 +1,11 @@
+.paginator-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 80vw;
+  min-width: 600px;
+
+  mat-paginator {
+    background-color: antiquewhite;
+    margin-top: 15px;
+  }
+}

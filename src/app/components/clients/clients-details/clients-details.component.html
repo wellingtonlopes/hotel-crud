@@ -1,0 +1,28 @@
+<app-inner-header title="{{client.firstName}}'s client details"></app-inner-header>
+
+<main>
+  <div class="details-container">
+    <header class="lotus-divider">
+      <div></div>
+      <mat-icon>spa</mat-icon>
+      <div></div>
+    </header>
+    <section class="content-container">
+      <div class="id">ID:&nbsp;
+        <span>
+          {{client.clientId}}
+        </span>
+      </div>
+      <div class="fullname">Fullname:&nbsp;
+        <span>
+          {{client.firstName}} {{client.lastName}}
+        </span>
+      </div>
+      <div class="email">E-mail:&nbsp;
+        <span>
+          {{client.email}}
+        </span>
+      </div>
+    </section>
+  </div>
+</main>

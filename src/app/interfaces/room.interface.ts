@@ -4,7 +4,7 @@ export interface RoomInterface {
   roomId: number;
   roomNumber: number;
   roomType: RoomTypeEnum;
-  reservation: ReservationInterface | null;
+  reservation: ReservationInterface[];
   price: number;
 }
 

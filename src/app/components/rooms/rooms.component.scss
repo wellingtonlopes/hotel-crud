@@ -41,7 +41,7 @@
     }
 
     .divider {
-      align-self: end;
+      align-self: flex-end;
       align-items: center;
       display: flex;
       margin-bottom: -12px;
@@ -63,7 +63,7 @@
     }
 
     .mat-card-content {
-      align-items: end;
+      align-items: flex-end;
       display: flex;
       justify-content: space-between;
 
@@ -108,17 +108,5 @@
     margin: 0;
     padding: 0;
     width: 100%;
-  }
-}
-
-.paginator-container {
-  display: flex;
-  justify-content: end;
-  width: 1230px;
-  min-width: 600px;
-
-  mat-paginator {
-    background-color: antiquewhite;
-    margin-top: 15px;
   }
 }

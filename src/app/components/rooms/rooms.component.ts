@@ -5,6 +5,7 @@ import { first } from 'rxjs';
 
 import { RoomInterface, RoomTypeEnum } from 'src/app/interfaces/room.interface';
 import { RoomsService } from 'src/app/services/rooms.service';
+import { Constants } from 'src/app/shared/contants';
 import { RoomDetailsDialogComponent } from './room-details-dialog/room-details-dialog.component';
 
 @Component({
@@ -21,13 +22,12 @@ export class RoomsComponent implements OnInit {
   public deluxeRoomsTotal!: number;
   public suitesTotal!: number;
   public presidentialSuitesTotal!: number;
-
-  private readonly FIRST_PAGE = 0;
+  public readonly pageSize = 4;
 
   constructor(private roomsService: RoomsService, private dialog: MatDialog) { }
 
   public ngOnInit(): void {
-    this.getRoomsByPage(this.FIRST_PAGE);
+    this.getPaginatedRooms(Constants.FIRST_PAGE);
     this.roomsService.getRoomQuantity(RoomTypeEnum.SINGLE_ROOM).pipe(first()).subscribe(response => this.singleRoomsTotal = response);
     this.roomsService.getRoomQuantity(RoomTypeEnum.DOUBLE_ROOM).pipe(first()).subscribe(response => this.doubleRoomsTotal = response);
     this.roomsService.getRoomQuantity(RoomTypeEnum.DELUXE_ROOM).pipe(first()).subscribe(response => this.deluxeRoomsTotal = response);
@@ -40,14 +40,14 @@ export class RoomsComponent implements OnInit {
       data: {
         roomNumber: room.roomNumber,
         roomPrice: room.price,
-        reservedBy: room.reservation?.reservedBy,
+        reservedBy: room.reservation.length > 0 ? room.reservation[0].reservedBy : '',
         roomType: room.roomType
       }
     });
   }
 
-  public changePage(event: PageEvent): void {
-    this.getRoomsByPage(event.pageIndex);
+  public changePage(event: number): void {
+    this.getPaginatedRooms(event);
   }
 
   public filterList(filterBy: string) {
@@ -57,7 +57,7 @@ export class RoomsComponent implements OnInit {
     })
   }
 
-  private getRoomsByPage(pageIndex: number) {
+  private getPaginatedRooms(pageIndex: number) {
     this.roomsService.getRooms(pageIndex).pipe(first()).subscribe(response => {
       this.roomList = response.roomList;
       this.totalRooms = response.totalCount;
