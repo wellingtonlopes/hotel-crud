@@ -1,0 +1,69 @@
+<app-inner-header title="Reservation made by {{reservation.reservedBy.firstName}}"></app-inner-header>
+
+<main>
+  <div class="details-container">
+    <header class="lotus-divider">
+      <div></div>
+      <mat-icon>spa</mat-icon>
+      <div></div>
+    </header>
+
+    <section class="content-container">
+      <div class="id">Reservation ID:&nbsp;
+        <span>
+          {{reservation.reservationId}}
+        </span>
+      </div>
+
+      <div class="fullname">Reserved by:&nbsp;
+        <span>
+          {{reservation.reservedBy.firstName}} {{reservation.reservedBy.lastName}}
+        </span>
+      </div>
+
+      <div class="done-at">Reservation Done At:&nbsp;
+        <span>
+          {{reservation.reservationDoneAt}}
+        </span>
+      </div>
+
+      <div class="canceled-at">Reservation cancellation:&nbsp;
+        <span *ngIf="reservation.canceledReservationAt; else notCanceled">
+          {{reservation.canceledReservationAt}}
+        </span>
+        <ng-template #notCanceled><span>Not canceled</span></ng-template>
+      </div>
+
+      <div class="hidden-divider"></div>
+
+      <div class="has-checked-in">Has checked-in:&nbsp;
+        <span *ngIf="reservation.hasCheckedIn; else notCheckedIn">
+          Check in made
+        </span>
+        <ng-template #notCheckedIn><span>Still has not checked in</span></ng-template>
+      </div>
+
+      <div class="check-in">Date for check-in:&nbsp;
+        <span>
+          {{reservation.checkInAt}}
+        </span>
+        <span *ngIf="!reservation.hasCheckedIn"> (Expected)</span>
+      </div>
+
+      <div class="has-checked-out">Has checked-out:&nbsp;
+        <span *ngIf="reservation.hasCheckedOut; else notCheckedOut">
+          Check out made
+        </span>
+        <ng-template #notCheckedOut><span>Still has not checked out</span></ng-template>
+      </div>
+
+      <div class="checked-out">Date for check-out:&nbsp;
+        <span>
+          {{reservation.checkOutAt}}
+        </span>
+        <span *ngIf="!reservation.hasCheckedOut"> (Expected)</span>
+      </div>
+
+    </section>
+  </div>
+</main>

@@ -7,12 +7,14 @@ import { SharedComponentsModule } from '../shared-components/shared-components.m
 import { reservationRouter } from './reservations.router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ReservationsDetailsComponent } from './reservations-details/reservations-details.component';
 
 
 
 @NgModule({
   declarations: [
-    ReservationsComponent
+    ReservationsComponent,
+    ReservationsDetailsComponent,
   ],
   imports: [
     CommonModule,
