@@ -1,41 +1,51 @@
 <app-inner-header title="Create a reservation"></app-inner-header>
 
-<form [formGroup]="reservationForm">
-  <mat-form-field class="form-field" appearance="fill">
-    <mat-label>Type the client name</mat-label>
-    <input type="text" placeholder="Choose one" aria-label="Name of registered clients" matInput
-      formControlName="checkOutAt" [matAutocomplete]="auto" (input)="onInput($event)">
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="autocompleteDisplayItem.bind(this)">
-      <mat-option *ngFor="let client of filteredClients" [value]="client.clientId">
-        {{client.firstName}} {{client.lastName}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+<div class="form-wrapper">
+  <form [formGroup]="reservationForm">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Type the client name</mat-label>
+      <input type="text" placeholder="Choose one" aria-label="Name of registered clients" matInput
+        formControlName="reservedBy" [matAutocomplete]="auto" (input)="onInput($event)">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="autocompleteDisplayItem.bind(this)">
+        <mat-option *ngFor="let client of filteredClients" [value]="client.clientId">
+          {{client.firstName}} {{client.lastName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-  <mat-form-field class="form-field" appearance="fill">
-    <mat-label>Select an acommodation</mat-label>
-    <mat-select formControlName="reservedRoomId">
-      <mat-option *ngFor="let room of roomList" [value]="room.roomId">
-        {{room.roomNumber}} - {{room.roomName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Select an acommodation</mat-label>
+      <mat-select formControlName="reservedRoomId">
+        <mat-option *ngFor="let room of roomList" [value]="room.roomId">
+          {{room.roomNumber}} - {{room.roomName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="form-field" appearance="fill">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input matStartDate formControlName="checkInAt" placeholder="Start date">
-      <input matEndDate formControlName="checkOutAt" placeholder="End date">
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate formControlName="checkInAt" placeholder="Start date">
+        <input matEndDate formControlName="checkOutAt" placeholder="End date">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
 
-    <mat-error *ngIf="reservationForm.controls['checkInAt'].hasError('matStartDateInvalid')">Invalid start
-      date</mat-error>
-    <mat-error *ngIf="reservationForm.controls['checkOutAt'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
-  </mat-form-field>
-</form>
+      <mat-error *ngIf="reservationForm.controls['checkInAt'].hasError('matStartDateInvalid')">Invalid start
+        date</mat-error>
+      <mat-error *ngIf="reservationForm.controls['checkOutAt'].hasError('matEndDateInvalid')">Invalid end
+        date</mat-error>
+    </mat-form-field>
+  </form>
 
-<button mat-raised-button routerLink="reservations">CANCEL</button>
-<button mat-raised-button (click)="onSubmit()">CREATE</button>
+  <section class="button-section">
+    <button mat-stroked-button color="warn" routerLink="reservations" (click)="cancel()">CANCEL</button>
+    <button *ngIf="!idParameter; else updateButton" mat-stroked-button (click)="onSubmit()"
+      [disabled]="!reservationForm.valid || !reservationForm.dirty">CREATE</button>
+    <ng-template #updateButton>
+      <button mat-stroked-button (click)="onUpdate()"
+        [disabled]="!reservationForm.valid || !reservationForm.dirty">UPDATE</button>
+    </ng-template>
+  </section>
+</div>

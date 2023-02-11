@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 
 import { ClientInterface } from 'src/app/interfaces/client.interface';
@@ -18,10 +18,11 @@ import { Constants } from 'src/app/shared/contants';
   styleUrls: ['./reservations-add-edit.component.scss']
 })
 export class ReservationsAddEditComponent implements OnInit {
-  public clientList!: ClientInterface[];
   public filteredClients!: ClientInterface[];
   public roomList!: RoomsForSelect[];
   public reservationForm!: FormGroup;
+  public idParameter: number | null;
+
   private reservationIds = [999];
 
   constructor(
@@ -31,21 +32,17 @@ export class ReservationsAddEditComponent implements OnInit {
     private reservationsService: ReservationsService,
     private snackbarService: SnackbarService,
     private router: Router,
-  ) { }
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.idParameter = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+  }
 
   ngOnInit(): void {
-    this.roomsService.getAllRoomsForSelect().pipe(first()).subscribe(response => {
-      this.roomList = response;
-    })
+    this.createFormAndSetInitialValues();
 
-    this.getAutocompleteOptions('');
-
-    this.reservationForm = this.formBuilder.group({
-      reservedRoomId: [null, Validators.required],
-      reservedBy: [null, Validators.required],
-      checkInAt: ['', Validators.required],
-      checkOutAt: ['', Validators.required]
-    });
+    if (this.idParameter) {
+      this.setEditingValues(this.idParameter);
+    }
   }
 
   public onInput(event: Event) {
@@ -79,9 +76,27 @@ export class ReservationsAddEditComponent implements OnInit {
     });
   }
 
+  public onUpdate(): void {
+    const reservationRequest: ReservationInterface = this.setReservationObject()
+
+    this.reservationsService.updateReservation(reservationRequest).pipe(first()).subscribe({
+      next: () => {
+        this.snackbarService.showSnackbarSuccess('Reservation updated with success!');
+        this.router.navigate([`${Constants.PATH.RESERVATIONS}`]);
+      },
+      error: (error) => {
+        this.snackbarService.showSnackbarError(error);
+      }
+    });
+  }
+
+  public cancel(): void {
+    this.router.navigate([`${Constants.PATH.RESERVATIONS}`]);
+  }
+
   private setReservationObject(): ReservationInterface {
-    return {
-      reservationId: this.reservationIds.length > 0 ? this.reservationIds.pop()! : 1000,
+    const clientForReservation = this.filteredClients.find(client => client.clientId === this.reservationForm.controls['reservedBy'].value);
+    const newReservation: ReservationInterface = {
       reservationDoneAt: new Date(),
       checkInAt: this.reservationForm.controls['checkInAt'].value,
       checkOutAt: this.reservationForm.controls['checkOutAt'].value,
@@ -89,13 +104,46 @@ export class ReservationsAddEditComponent implements OnInit {
       hasCheckedOut: false,
       canceledReservationAt: null,
       reservedRoomId: this.reservationForm.controls['reservedRoomId'].value,
-      reservedBy: this.reservationForm.controls['reservedBy'].value
+      reservedBy: clientForReservation!
     };
+
+    if (!this.idParameter) {
+      newReservation.reservationId = this.reservationIds.length > 0 ? this.reservationIds.pop()! : 1000;
+    } else {
+      newReservation.reservationId = this.idParameter;
+    }
+
+    return newReservation;
   }
 
   private getAutocompleteOptions(searchString: string) {
     this.clientsService.searchClients(searchString).pipe(first()).subscribe(response => {
       this.filteredClients = response;
+    });
+  }
+
+  private setEditingValues(id: number): void {
+    this.reservationsService.getReservationById(id).pipe(first()).subscribe(response => {
+      this.reservationForm.patchValue({
+        reservedRoomId: response.reservedRoomId,
+        reservedBy: response.reservedBy.clientId,
+        checkInAt: response.checkInAt,
+        checkOutAt: response.checkOutAt
+      });
+    });
+  }
+
+  private createFormAndSetInitialValues() {
+    this.getAutocompleteOptions('');
+    this.roomsService.getAllRoomsForSelect().pipe(first()).subscribe(response => {
+      this.roomList = response;
+    });
+
+    this.reservationForm = this.formBuilder.group({
+      reservedRoomId: [null, Validators.required],
+      reservedBy: [null, Validators.required],
+      checkInAt: ['', Validators.required],
+      checkOutAt: ['', Validators.required]
     });
   }
 }

@@ -1,7 +1,7 @@
 import { ClientInterface } from "./client.interface"
 
 export interface ReservationInterface {
-  reservationId: number;
+  reservationId?: number;
   reservationDoneAt: Date;
   checkInAt: Date | null;
   hasCheckedIn: boolean;

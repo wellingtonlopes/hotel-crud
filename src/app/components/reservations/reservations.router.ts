@@ -15,6 +15,10 @@ const RESERVATIONS_ROUTER: Routes = [
     component: ReservationsAddEditComponent
   },
   {
+    path: `${Constants.PATH.EDIT_RESERVATION}/${Constants.PATH.ID_PARAMETER}`,
+    component: ReservationsAddEditComponent
+  },
+  {
     path: Constants.PATH.ID_PARAMETER,
     component: ReservationsDetailsComponent
   }
