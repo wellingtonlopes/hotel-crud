@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-inner-header',
@@ -15,11 +15,18 @@ export class InnerHeaderComponent {
   @Input()
   public hasActionButton = false;
 
+  @Output()
+  public onButtonClick = new EventEmitter<boolean>();
+
   public hasSubtitle(): boolean {
     return this.subTitle !== '';
   }
 
   public hasAddButton(): boolean {
     return this.hasActionButton;
+  }
+
+  public buttonClick(): void {
+    this.onButtonClick.emit(true);
   }
 }

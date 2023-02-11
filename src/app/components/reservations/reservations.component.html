@@ -1,4 +1,5 @@
-<app-inner-header title="Reservations" [hasActionButton]="hasAddFunctionality"></app-inner-header>
+<app-inner-header title="Reservations" [hasActionButton]="hasAddFunctionality"
+  (onButtonClick)="goToCreateReservation()"></app-inner-header>
 
 <main>
   <section class="reservation-list-container">

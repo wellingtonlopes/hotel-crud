@@ -63,6 +63,10 @@ export class ReservationsComponent implements OnInit {
     //DELETE OBJECT --- TO BE IMPLEMENTED ---
   }
 
+  public goToCreateReservation(): void {
+    this.router.navigate([`${Constants.PATH.RESERVATIONS}/${Constants.PATH.CREATE_RESERVATION}`]);
+  }
+
   private getPaginatedReservations(pageIndex: number) {
     this.reservationsService.getReservations(pageIndex).pipe(first()).subscribe(response => {
       this.reservationList = response.reservationList;
