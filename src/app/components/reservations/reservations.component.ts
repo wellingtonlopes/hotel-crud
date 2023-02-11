@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { first } from 'rxjs';
+import { first, Subscription } from 'rxjs';
+import * as dayjs from 'dayjs';
 
 import { ReservationInterface, ReservationResponse } from 'src/app/interfaces/reservation.interface';
 import { ReservationsService } from 'src/app/services/reservations.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Constants } from 'src/app/shared/contants';
 import { ReservationsSource } from './reservations-data-source';
+import { DateFormatService } from 'src/app/services/date-format.service';
 
 @Component({
   selector: 'app-reservations',
   templateUrl: './reservations.component.html',
   styleUrls: ['./reservations.component.scss']
 })
-export class ReservationsComponent implements OnInit {
+export class ReservationsComponent implements OnInit, OnDestroy {
   public reservationsDataSource = new ReservationsSource();
   public totalCount!: number;
   public readonly pageSize = 5;
@@ -21,11 +23,18 @@ export class ReservationsComponent implements OnInit {
   public readonly displayedColumns: string[] = ['id', 'reserved-by', 'reserved-at', 'status', 'actions'];
 
   private reservationList!: ReservationInterface[];
+  private currentDateFormat!: string;
+  private subscriptions = new Subscription();
 
-  constructor(private readonly reservationsService: ReservationsService, private router: Router, private snackbarService: SnackbarService) { }
+  constructor(private readonly reservationsService: ReservationsService, private router: Router, private snackbarService: SnackbarService, private dateFormatService: DateFormatService) { }
 
   ngOnInit(): void {
     this.getPaginatedReservations(Constants.FIRST_PAGE);
+    this.subscriptions.add(this.dateFormatService.listenToDateFormat().subscribe(dateFormat => this.currentDateFormat = dateFormat));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   public changePage(event: number): void {
@@ -78,6 +87,10 @@ export class ReservationsComponent implements OnInit {
 
   public goToCreateReservation(): void {
     this.router.navigate([`${Constants.PATH.RESERVATIONS}/${Constants.PATH.CREATE_RESERVATION}`]);
+  }
+
+  public formatDate(date: string): string {
+    return dayjs(date).format(this.currentDateFormat);
   }
 
   private getPaginatedReservations(pageIndex: number) {
