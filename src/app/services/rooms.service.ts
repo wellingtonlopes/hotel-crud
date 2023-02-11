@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 
 import { MOCKED_ROOMS } from '../shared/mock-database';
-import { RoomInterface, RoomResponseInterface, RoomTypeEnum } from '../interfaces/room.interface';
+import { RoomInterface, RoomResponseInterface, RoomsForSelect, RoomTypeEnum } from '../interfaces/room.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -68,5 +68,15 @@ export class RoomsService {
       .reduce((acc, currentPageArray) => acc + currentPageArray.length, 0);
 
     return from([numberOfRooms]);
+  }
+
+  public getAllRoomsForSelect(): Observable<RoomsForSelect[]> {
+    const roomsForListing = this.roomInterfaceList.map(page => {
+      return page.map(room => {
+        return { roomName: room.roomType, roomId: room.roomId, roomNumber: room.roomNumber } as RoomsForSelect;
+      })
+    }).flat(2);
+
+    return from([roomsForListing]);
   }
 }

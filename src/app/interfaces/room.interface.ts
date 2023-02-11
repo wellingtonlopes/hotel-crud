@@ -20,3 +20,9 @@ export interface RoomResponseInterface {
   roomList: RoomInterface[];
   totalCount: number;
 }
+
+export interface RoomsForSelect {
+  roomName: RoomTypeEnum;
+  roomNumber: number;
+  roomId: number;
+}

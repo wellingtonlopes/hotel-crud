@@ -9,6 +9,7 @@ export interface ReservationInterface {
   hasCheckedOut: boolean;
   canceledReservationAt: Date | null;
   reservedBy: ClientInterface;
+  reservedRoomId: number;
 }
 
 export interface ReservationResponse {
