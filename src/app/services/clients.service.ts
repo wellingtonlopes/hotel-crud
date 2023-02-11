@@ -26,4 +26,14 @@ export class ClientsService {
 
     return from([client]);
   }
+
+  public searchClients(search: string): Observable<ClientInterface[]> {
+    const searchList = [...this.clientListPage1.clientList, ...this.clientListPage2.clientList];
+    const lowerCaseSearch = search.toLowerCase();
+    const filteredClients = searchList.filter(client => {
+      return (client.firstName.toLowerCase().indexOf(lowerCaseSearch) > -1) || (client.lastName.toLowerCase().indexOf(lowerCaseSearch) > -1);
+    });
+
+    return from([filteredClients]);
+  }
 }

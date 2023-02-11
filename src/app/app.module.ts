@@ -11,6 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { SharedComponentsModule } from './components/shared-components/shared-components.module';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SharedComponentsModule } from './components/shared-components/shared-co
     MatIconModule,
     MatSidenavModule,
     SharedComponentsModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

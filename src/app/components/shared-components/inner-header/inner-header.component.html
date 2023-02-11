@@ -3,7 +3,7 @@
     <h1>{{title}}</h1>
     <h3 *ngIf="hasSubtitle()">{{subTitle}}</h3>
   </div>
-  <button class="icon-button" *ngIf="hasAddButton()" mat-stroked-button>
+  <button class="icon-button" *ngIf="hasAddButton()" mat-stroked-button (click)="buttonClick()">
     <mat-icon>add</mat-icon>
     ADD
   </button>

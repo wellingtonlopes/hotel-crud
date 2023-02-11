@@ -5,6 +5,8 @@ export class Constants {
     REPORTS: 'reports',
     CLIENTS: 'clients',
     RESERVATIONS: 'reservations',
+    CREATE_RESERVATION: 'create-reservation',
+    EDIT_RESERVATION: 'edit-reservation',
     ID_PARAMETER: ":id"
   };
 

@@ -1,4 +1,5 @@
-<app-inner-header title="Reservations" [hasActionButton]="hasAddFunctionality"></app-inner-header>
+<app-inner-header title="Reservations" [hasActionButton]="hasAddFunctionality"
+  (onButtonClick)="goToCreateReservation()"></app-inner-header>
 
 <main>
   <section class="reservation-list-container">
@@ -37,6 +38,10 @@
           <button mat-icon-button aria-label="Icon button with a trash icon for deleting the item"
             (click)="deleteElement(element.reservationId)">
             <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Icon button with a pencil icon for editing the item"
+            (click)="editElement(element.reservationId)">
+            <mat-icon>edit</mat-icon>
           </button>
         </td>
       </ng-container>

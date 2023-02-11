@@ -10,6 +10,16 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.snackbar-error {
+  background-color: darkred;
+  color: #fafafa;
+}
+
+.snackbar-success {
+  background-color: darkgreen;
+  color: #fafafa;
+}
+
 table {
   width: 80vw;
 

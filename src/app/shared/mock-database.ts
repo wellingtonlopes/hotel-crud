@@ -61,7 +61,8 @@ const reservationsPage1: ReservationResponse = {
     hasCheckedIn: false,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage1.clientList[0]
+    reservedBy: clientsPage1.clientList[0],
+    reservedRoomId: 3
   },
   {
     reservationId: 2,
@@ -71,7 +72,8 @@ const reservationsPage1: ReservationResponse = {
     hasCheckedIn: false,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage1.clientList[1]
+    reservedBy: clientsPage1.clientList[1],
+    reservedRoomId: 10
   },
   {
     reservationId: 3,
@@ -81,7 +83,8 @@ const reservationsPage1: ReservationResponse = {
     hasCheckedIn: false,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage1.clientList[2]
+    reservedBy: clientsPage1.clientList[2],
+    reservedRoomId: 5
   },
   {
     reservationId: 4,
@@ -91,7 +94,8 @@ const reservationsPage1: ReservationResponse = {
     hasCheckedIn: true,
     hasCheckedOut: true,
     checkOutAt: new Date(),
-    reservedBy: clientsPage1.clientList[3]
+    reservedBy: clientsPage1.clientList[3],
+    reservedRoomId: 6
   },
   {
     reservationId: 5,
@@ -101,7 +105,8 @@ const reservationsPage1: ReservationResponse = {
     hasCheckedIn: true,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage1.clientList[4]
+    reservedBy: clientsPage1.clientList[4],
+    reservedRoomId: 2
   }],
   totalCount: 8
 };
@@ -115,7 +120,8 @@ const reservationsPage2: ReservationResponse = {
     hasCheckedIn: false,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage2.clientList[0]
+    reservedBy: clientsPage2.clientList[0],
+    reservedRoomId: 9
   },
   {
     reservationId: 7,
@@ -125,7 +131,8 @@ const reservationsPage2: ReservationResponse = {
     hasCheckedIn: false,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage2.clientList[1]
+    reservedBy: clientsPage2.clientList[1],
+    reservedRoomId: 1
   },
   {
     reservationId: 8,
@@ -135,7 +142,8 @@ const reservationsPage2: ReservationResponse = {
     hasCheckedIn: false,
     hasCheckedOut: false,
     checkOutAt: new Date(),
-    reservedBy: clientsPage2.clientList[0]
+    reservedBy: clientsPage2.clientList[0],
+    reservedRoomId: 1
   }],
   totalCount: 8
 };
@@ -145,7 +153,7 @@ const rooms: RoomInterface[][] = [
     roomId: 1,
     roomNumber: 101,
     roomType: RoomTypeEnum.SINGLE_ROOM,
-    reservation: [reservationsPage2.reservationList[1]],
+    reservation: [reservationsPage2.reservationList[1], reservationsPage2.reservationList[2]],
     price: 250
   },
   {
@@ -201,7 +209,7 @@ const rooms: RoomInterface[][] = [
     roomId: 9,
     roomNumber: 302,
     roomType: RoomTypeEnum.SUITE,
-    reservation: [reservationsPage1.reservationList[0]],
+    reservation: [reservationsPage2.reservationList[0]],
     price: 900
   },
   {

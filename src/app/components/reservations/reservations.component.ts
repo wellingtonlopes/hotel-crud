@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
 
-import { ReservationInterface } from 'src/app/interfaces/reservation.interface';
+import { ReservationInterface, ReservationResponse } from 'src/app/interfaces/reservation.interface';
 import { ReservationsService } from 'src/app/services/reservations.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Constants } from 'src/app/shared/contants';
 import { ReservationsSource } from './reservations-data-source';
 
@@ -21,7 +22,7 @@ export class ReservationsComponent implements OnInit {
 
   private reservationList!: ReservationInterface[];
 
-  constructor(private readonly reservationsService: ReservationsService, private router: Router) { }
+  constructor(private readonly reservationsService: ReservationsService, private router: Router, private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.getPaginatedReservations(Constants.FIRST_PAGE);
@@ -60,14 +61,34 @@ export class ReservationsComponent implements OnInit {
   }
 
   public deleteElement(reservationId: number): void {
-    //DELETE OBJECT --- TO BE IMPLEMENTED ---
+    this.reservationsService.deleteReservation(reservationId).pipe(first()).subscribe({
+      next: response => {
+        this.setTableProperties(response);
+        this.snackbarService.showSnackbarSuccess('Reservation was deleted with success!')
+      },
+      error: error => {
+        this.snackbarService.showSnackbarError(error);
+      }
+    })
+  }
+
+  public editElement(reservationId: number): void {
+    this.router.navigate([`${Constants.PATH.RESERVATIONS}/${Constants.PATH.EDIT_RESERVATION}/${reservationId}`]);
+  }
+
+  public goToCreateReservation(): void {
+    this.router.navigate([`${Constants.PATH.RESERVATIONS}/${Constants.PATH.CREATE_RESERVATION}`]);
   }
 
   private getPaginatedReservations(pageIndex: number) {
     this.reservationsService.getReservations(pageIndex).pipe(first()).subscribe(response => {
-      this.reservationList = response.reservationList;
-      this.totalCount = response.totalCount;
-      this.reservationsDataSource.loadReservations(this.reservationList);
+      this.setTableProperties(response);
     });
+  }
+
+  private setTableProperties(response: ReservationResponse) {
+    this.reservationList = response.reservationList;
+    this.totalCount = response.totalCount;
+    this.reservationsDataSource.loadReservations(this.reservationList);
   }
 }
