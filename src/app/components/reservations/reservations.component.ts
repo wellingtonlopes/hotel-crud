@@ -18,6 +18,7 @@ import { DateFormatService } from 'src/app/services/date-format.service';
 export class ReservationsComponent implements OnInit, OnDestroy {
   public reservationsDataSource = new ReservationsSource();
   public totalCount!: number;
+  public pageIndex: number = Constants.FIRST_PAGE;
   public readonly pageSize = 5;
   public readonly hasAddFunctionality = true;
   public readonly displayedColumns: string[] = ['id', 'reserved-by', 'reserved-at', 'status', 'actions'];
@@ -29,7 +30,7 @@ export class ReservationsComponent implements OnInit, OnDestroy {
   constructor(private readonly reservationsService: ReservationsService, private router: Router, private snackbarService: SnackbarService, private dateFormatService: DateFormatService) { }
 
   ngOnInit(): void {
-    this.getPaginatedReservations(Constants.FIRST_PAGE);
+    this.getPaginatedReservations(this.pageIndex);
     this.subscriptions.add(this.dateFormatService.listenToDateFormat().subscribe(dateFormat => this.currentDateFormat = dateFormat));
   }
 
@@ -39,6 +40,7 @@ export class ReservationsComponent implements OnInit, OnDestroy {
 
   public changePage(event: number): void {
     this.getPaginatedReservations(event);
+    this.pageIndex = event;
   }
 
   public goToElementDetails(reservationId: number): void {
@@ -73,6 +75,7 @@ export class ReservationsComponent implements OnInit, OnDestroy {
     this.reservationsService.deleteReservation(reservationId).pipe(first()).subscribe({
       next: response => {
         this.setTableProperties(response);
+        this.pageIndex = Constants.FIRST_PAGE;
         this.snackbarService.showSnackbarSuccess('Reservation was deleted with success!')
       },
       error: error => {

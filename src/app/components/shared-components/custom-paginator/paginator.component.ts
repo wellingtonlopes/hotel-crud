@@ -13,6 +13,9 @@ export class CustomPaginatorComponent {
   @Input()
   pageSize: number = 0;
 
+  @Input()
+  pageIndex: number = 0;
+
   @Output()
   onChangePage: EventEmitter<number> = new EventEmitter();
 

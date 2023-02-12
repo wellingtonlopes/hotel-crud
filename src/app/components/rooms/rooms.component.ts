@@ -17,6 +17,7 @@ import { RoomDetailsDialogComponent } from './room-details-dialog/room-details-d
 export class RoomsComponent implements OnInit {
   public roomList!: RoomInterface[];
   public totalRooms!: number;
+  public pageIndex = Constants.FIRST_PAGE;
   public currentTotalRooms!: number;
   public singleRoomsTotal!: number;
   public doubleRoomsTotal!: number;
@@ -29,7 +30,7 @@ export class RoomsComponent implements OnInit {
   constructor(private roomsService: RoomsService, private dialog: MatDialog, private router: Router, private snackbarService: SnackbarService) { }
 
   public ngOnInit(): void {
-    this.getPaginatedRooms(Constants.FIRST_PAGE);
+    this.getPaginatedRooms(this.pageIndex);
     this.setFiltersQuantities();
   }
 
@@ -46,6 +47,7 @@ export class RoomsComponent implements OnInit {
 
   public changePage(event: number): void {
     this.getPaginatedRooms(event);
+    this.pageIndex = event;
   }
 
   public filterList(filterBy: string) {
@@ -65,6 +67,7 @@ export class RoomsComponent implements OnInit {
         this.roomList = response.roomList;
         this.totalRooms = response.totalCount;
         this.currentTotalRooms = this.totalRooms;
+        this.pageIndex = Constants.FIRST_PAGE;
         this.setFiltersQuantities();
         this.snackbarService.showSnackbarSuccess('Reservation was deleted with success!');
       },

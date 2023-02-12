@@ -50,7 +50,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <app-custom-paginator *ngIf="totalCount" [currentTotalCount]="totalCount" [pageSize]="pageSize"
-      (onChangePage)="changePage($event)"></app-custom-paginator>
+    <app-custom-paginator *ngIf="totalCount" [pageIndex]="pageIndex" [currentTotalCount]="totalCount"
+      [pageSize]="pageSize" (onChangePage)="changePage($event)"></app-custom-paginator>
   </section>
 </main>
