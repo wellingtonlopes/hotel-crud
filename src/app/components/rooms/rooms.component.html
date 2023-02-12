@@ -31,8 +31,14 @@
         </div>
 
         <mat-card-content>
-          <img mat-card-image src="./../../../assets/room-pictures/Deluxe Room-2.jpg"
-            alt="Photo of the White Lotus hotel room">
+          <ng-container [ngSwitch]="room.roomType">
+            <ng-container *ngSwitchCase="'Single Room'" [ngTemplateOutlet]="singleRoomPicture"></ng-container>
+            <ng-container *ngSwitchCase="'Double Room'" [ngTemplateOutlet]="doubleRoomPicture"></ng-container>
+            <ng-container *ngSwitchCase="'Deluxe Room'" [ngTemplateOutlet]="deluxeRoomPicture"></ng-container>
+            <ng-container *ngSwitchCase="'Suite'" [ngTemplateOutlet]="suitePicture"></ng-container>
+            <ng-container *ngSwitchCase="'Presidential Suite'"
+              [ngTemplateOutlet]="presidentialSuitePicture"></ng-container>
+          </ng-container>
           <main>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas lectus at odio ullamcorper, non
@@ -54,5 +60,25 @@
 
   <ng-template #emptyList>
     <p>No room registered at the moment</p>
+  </ng-template>
+  <ng-template #singleRoomPicture>
+    <img mat-card-image src="./../../../assets/room-pictures/Single Room-2.jpg"
+      alt="Photo of the White Lotus single room">
+  </ng-template>
+  <ng-template #doubleRoomPicture>
+    <img mat-card-image src="./../../../assets/room-pictures/Double Room-2.jpg"
+      alt="Photo of the White Lotus double room">
+  </ng-template>
+  <ng-template #deluxeRoomPicture>
+    <img mat-card-image src="./../../../assets/room-pictures/Deluxe Room-1-2.jpg"
+      alt="Photo of the White Lotus deluxe room">
+  </ng-template>
+  <ng-template #suitePicture>
+    <img mat-card-image src="./../../../assets/room-pictures/Suite-2-1.jpg"
+      alt="Photo of the White Lotus suite with sea view">
+  </ng-template>
+  <ng-template #presidentialSuitePicture>
+    <img mat-card-image src="./../../../assets/room-pictures/Presidential Suite-1.jpg"
+      alt="Photo of the White Lotus presidential suite with sea view">
   </ng-template>
 </main>
