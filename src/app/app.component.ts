@@ -12,7 +12,6 @@ export class AppComponent {
   public dayFirstFormat = DateFormatService.dayFirstDateFormat;
 
   constructor(private dateFormatService: DateFormatService) {
-
   }
 
   public emitFormat(format: string) {

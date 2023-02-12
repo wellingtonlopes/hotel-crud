@@ -5,16 +5,31 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { MomentDateAdapter, MomentDateModule } from '@angular/material-moment-adapter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { SharedComponentsModule } from './components/shared-components/shared-components.module';
-import { Constants } from './shared/contants';
-import { MatNativeDateModule } from '@angular/material/core';
+
+/*
+  Constant for setting the MAT_DATE_FORMAT to 'DD/MM/YYYY'.
+  Not using the Constants.DATE_FORMATS.(...) objects here so it will not be changed when dinamically changing the content of MAT_DATE_FORMAT.
+*/
+const DAY_FIRST_DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+}
 
 @NgModule({
   declarations: [
@@ -33,9 +48,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     SharedComponentsModule,
     MatMenuModule,
     MatNativeDateModule,
+    MomentDateModule,
   ],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: Constants.DATE_FORMATS.DDMMYYY }
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: DAY_FIRST_DATE_FORMAT }
   ],
   bootstrap: [AppComponent]
 })

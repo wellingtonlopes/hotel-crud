@@ -28,7 +28,7 @@
         <input matStartDate formControlName="checkInAt" placeholder="Start date">
         <input matEndDate formControlName="checkOutAt" placeholder="End date">
       </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-hint>{{getDateFormatString()}}</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
 
