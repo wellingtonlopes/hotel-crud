@@ -1,6 +1,6 @@
 import { ClientResponse } from "src/app/interfaces/client.interface";
 import { ReservationResponse } from "src/app/interfaces/reservation.interface";
-import { RoomInterface, RoomTypeEnum } from "src/app/interfaces/room.interface";
+import { RoomResponseInterface, RoomTypeEnum } from "src/app/interfaces/room.interface";
 
 const clientsPage1: ClientResponse = {
   clientList: [{
@@ -148,8 +148,8 @@ const reservationsPage2: ReservationResponse = {
   totalCount: 8
 };
 
-const rooms: RoomInterface[][] = [
-  [{
+const roomsPage1: RoomResponseInterface = {
+  roomList: [{
     roomId: 1,
     roomNumber: 101,
     roomType: RoomTypeEnum.SINGLE_ROOM,
@@ -177,7 +177,11 @@ const rooms: RoomInterface[][] = [
     reservation: [],
     price: 350
   }],
-  [{
+  totalCount: 10
+};
+
+const roomsPage2: RoomResponseInterface = {
+  roomList: [{
     roomId: 5,
     roomNumber: 201,
     roomType: RoomTypeEnum.DELUXE_ROOM,
@@ -205,7 +209,11 @@ const rooms: RoomInterface[][] = [
     reservation: [],
     price: 900
   }],
-  [{
+  totalCount: 10
+};
+
+const roomsPage3: RoomResponseInterface = {
+  roomList: [{
     roomId: 9,
     roomNumber: 302,
     roomType: RoomTypeEnum.SUITE,
@@ -218,10 +226,13 @@ const rooms: RoomInterface[][] = [
     roomType: RoomTypeEnum.PRESIDENTIAL_SUITE,
     reservation: [reservationsPage1.reservationList[1]],
     price: 1500
-  }]
-];
+  }],
+  totalCount: 10
+};
 
-export const MOCKED_ROOMS = JSON.stringify(rooms);
+export const MOCKED_ROOMS_PAGE_1 = JSON.stringify(roomsPage1);
+export const MOCKED_ROOMS_PAGE_2 = JSON.stringify(roomsPage2);
+export const MOCKED_ROOMS_PAGE_3 = JSON.stringify(roomsPage3);
 export const MOCKED_RESERVATIONS_PAGE_1 = JSON.stringify(reservationsPage1);
 export const MOCKED_RESERVATIONS_PAGE_2 = JSON.stringify(reservationsPage2);
 export const MOCKED_CLIENTS_PAGE_1 = JSON.stringify(clientsPage1);

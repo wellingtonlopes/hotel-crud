@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 
-import { MOCKED_ROOMS } from '../shared/mock-database';
+import { MOCKED_ROOMS_PAGE_1, MOCKED_ROOMS_PAGE_2, MOCKED_ROOMS_PAGE_3 } from '../shared/mock-database';
 import { RoomInterface, RoomResponseInterface, RoomsForSelect, RoomTypeEnum } from '../interfaces/room.interface';
 
 @Injectable({
@@ -9,39 +9,26 @@ import { RoomInterface, RoomResponseInterface, RoomsForSelect, RoomTypeEnum } fr
 })
 
 export class RoomsService {
-  private roomInterfaceList: RoomInterface[][];
-  private totalItemCount!: number;
+  private roomsPage1: RoomResponseInterface;
+  private roomsPage2: RoomResponseInterface;
+  private roomsPage3: RoomResponseInterface;
 
   constructor() {
-    this.roomInterfaceList = JSON.parse(MOCKED_ROOMS) as RoomInterface[][];
-    this.totalItemCount = this.roomInterfaceList.reduce((acc, currentPageArray) => acc + currentPageArray.length, 0);
+    this.roomsPage1 = JSON.parse(MOCKED_ROOMS_PAGE_1) as RoomResponseInterface;
+    this.roomsPage2 = JSON.parse(MOCKED_ROOMS_PAGE_2) as RoomResponseInterface;
+    this.roomsPage3 = JSON.parse(MOCKED_ROOMS_PAGE_3) as RoomResponseInterface;
   }
 
   public getRooms(pageIndex: number): Observable<RoomResponseInterface> {
     switch (pageIndex) {
       case 0:
-        const pageResponse1: RoomResponseInterface[] = [{
-          roomList: JSON.parse(MOCKED_ROOMS)[0],
-          totalCount: this.totalItemCount
-        }];
-        return from(pageResponse1);
-
+        return from([this.roomsPage1]);
       case 1:
-        const pageResponse2: RoomResponseInterface[] = [{
-          roomList: JSON.parse(MOCKED_ROOMS)[1],
-          totalCount: this.totalItemCount
-        }];
-        return from(pageResponse2);
-
+        return from([this.roomsPage2]);
       case 2:
-        const pageResponse3: RoomResponseInterface[] = [{
-          roomList: JSON.parse(MOCKED_ROOMS)[2],
-          totalCount: this.totalItemCount
-        }];
-        return from(pageResponse3);
-
+        return from([this.roomsPage3]);
       default:
-        throw new Error("Page index out of bounds");
+        return throwError(() => new Error("Page index out of bounds"));
     }
   }
 
@@ -50,8 +37,9 @@ export class RoomsService {
       return this.getRooms(0);
     }
 
-    const filteredRooms = this.roomInterfaceList.map(page => {
-      return page.filter(room => room.roomType === filter);
+    const roomPageList = [this.roomsPage1, this.roomsPage2, this.roomsPage3];
+    const filteredRooms = roomPageList.map(page => {
+      return page.roomList.filter(room => room.roomType === filter);
     }).flat(2);
 
     return from([{
@@ -61,9 +49,10 @@ export class RoomsService {
   }
 
   public getRoomQuantity(roomType: RoomTypeEnum): Observable<number> {
-    const numberOfRooms = this.roomInterfaceList
+    const roomPageList = [this.roomsPage1, this.roomsPage2, this.roomsPage3];
+    const numberOfRooms = roomPageList
       .map(page => {
-        return page.filter(room => room.roomType === roomType);
+        return page.roomList.filter(room => room.roomType === roomType);
       })
       .reduce((acc, currentPageArray) => acc + currentPageArray.length, 0);
 
@@ -71,12 +60,55 @@ export class RoomsService {
   }
 
   public getAllRoomsForSelect(): Observable<RoomsForSelect[]> {
-    const roomsForListing = this.roomInterfaceList.map(page => {
-      return page.map(room => {
+    const roomPageList = [this.roomsPage1, this.roomsPage2, this.roomsPage3];
+    const roomsForListing = roomPageList.map(page => {
+      return page.roomList.map(room => {
         return { roomName: room.roomType, roomId: room.roomId, roomNumber: room.roomNumber } as RoomsForSelect;
       })
     }).flat(2);
 
     return from([roomsForListing]);
+  }
+
+  public addRoom(room: RoomInterface): Observable<any> {
+    if (room.roomId !== 1000) {
+      this.roomsPage3.roomList.push(room);
+      this.roomsPage1.totalCount++
+      this.roomsPage2.totalCount++
+      this.roomsPage3.totalCount++
+      return from([200]);
+    }
+
+    return throwError(() => new Error('It was not possible to create the room. Try again later.'));
+  }
+
+  public deleteRoom(id: number): Observable<RoomResponseInterface> {
+    const reservationToBeDeleteOnPage1 = this.roomsPage1.roomList.find(room => room.roomId === id);
+    const reservationToBeDeleteOnPage2 = this.roomsPage2.roomList.find(room => room.roomId === id);
+    const reservationToBeDeleteOnPage3 = this.roomsPage3.roomList.find(room => room.roomId === id);
+
+    if (reservationToBeDeleteOnPage1) {
+      this.roomsPage1.roomList = this.roomsPage1.roomList
+        .filter(room => room.roomId !== reservationToBeDeleteOnPage1.roomId);
+
+      if (this.roomsPage2.roomList.length) {
+        this.roomsPage1.roomList.push(this.roomsPage2.roomList[0]);
+        this.roomsPage2.roomList.slice(1, undefined);
+      }
+    } else if (reservationToBeDeleteOnPage2) {
+      this.roomsPage2.roomList = this.roomsPage2.roomList
+        .filter(room => room.roomId !== reservationToBeDeleteOnPage2.roomId);
+    } else if (reservationToBeDeleteOnPage3) {
+      this.roomsPage3.roomList = this.roomsPage3.roomList
+        .filter(room => room.roomId !== reservationToBeDeleteOnPage3.roomId);
+    } else {
+      return throwError(() => new Error('It was not possible to delete the room. Try again later.'));
+    }
+
+    this.roomsPage1.totalCount--;
+    this.roomsPage2.totalCount--;
+    this.roomsPage2.totalCount--;
+
+    return from([this.roomsPage1]);
   }
 }

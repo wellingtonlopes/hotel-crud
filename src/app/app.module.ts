@@ -18,6 +18,7 @@ import { SharedComponentsModule } from './components/shared-components/shared-co
 /*
   Constant for setting the MAT_DATE_FORMAT to 'DD/MM/YYYY'.
   Not using the Constants.DATE_FORMATS.(...) objects here so it will not be changed when dinamically changing the content of MAT_DATE_FORMAT.
+  Consider using 'Object.freeze' in a future improvement.
 */
 const DAY_FIRST_DATE_FORMAT = {
   parse: {

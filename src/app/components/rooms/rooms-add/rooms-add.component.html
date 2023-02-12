@@ -1,0 +1,29 @@
+<app-inner-header title="Add an accomodation"></app-inner-header>
+
+<div class="form-wrapper">
+  <form [formGroup]="roomForm">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Room number</mat-label>
+      <input formControlName="roomNumber" matInput placeholder="Ex. 101" type="number">
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Select an acommodation</mat-label>
+      <mat-select formControlName="roomType">
+        <mat-option *ngFor="let type of roomTypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Price for room in EUR</mat-label>
+      <input formControlName="roomPrice" matInput placeholder="Price must be a value per night" type="number">
+    </mat-form-field>
+  </form>
+
+  <section class="button-section">
+    <button mat-stroked-button color="warn" routerLink="reservations" (click)="cancel()">CANCEL</button>
+    <button mat-stroked-button (click)="onSubmit()" [disabled]="!roomForm.valid">ADD</button>
+  </section>
+</div>
