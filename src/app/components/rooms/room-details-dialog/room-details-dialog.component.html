@@ -5,7 +5,7 @@
 <main>
   <p>€{{roomPrice}} per night</p>
   <p>Room Number: {{roomNumber}}</p>
-  <p *ngIf="reservedBy; else noReservation">Reserved by: {{reservedBy.firstName}} {{reservedBy.lastName}}</p>
+  <p *ngIf="reservedBy; else noReservation">Last reserved by: {{reservedBy.firstName}} {{reservedBy.lastName}}</p>
 
   <ng-template #noReservation>
     <p>Reserved by: No reservations for this room</p>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { first } from 'rxjs';
 
 import { RoomInterface, RoomTypeEnum } from 'src/app/interfaces/room.interface';
@@ -23,8 +23,9 @@ export class RoomsComponent implements OnInit {
   public suitesTotal!: number;
   public presidentialSuitesTotal!: number;
   public readonly pageSize = 4;
+  public readonly hasAddButton = true;
 
-  constructor(private roomsService: RoomsService, private dialog: MatDialog) { }
+  constructor(private roomsService: RoomsService, private dialog: MatDialog, private router: Router) { }
 
   public ngOnInit(): void {
     this.getPaginatedRooms(Constants.FIRST_PAGE);
@@ -40,7 +41,7 @@ export class RoomsComponent implements OnInit {
       data: {
         roomNumber: room.roomNumber,
         roomPrice: room.price,
-        reservedBy: room.reservation.length > 0 ? room.reservation[0].reservedBy : '',
+        reservedBy: room.reservation.length > 0 ? room.reservation[room.reservation.length - 1].reservedBy : '',
         roomType: room.roomType
       }
     });
@@ -55,6 +56,10 @@ export class RoomsComponent implements OnInit {
       this.roomList = response.roomList;
       this.currentTotalRooms = response.totalCount;
     })
+  }
+
+  public createRoom(): void {
+    this.router.navigate([`${Constants.PATH.ROOMS}/${Constants.PATH.CREATE_ROOM}`]);
   }
 
   private getPaginatedRooms(pageIndex: number) {
