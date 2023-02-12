@@ -24,8 +24,10 @@ export class ReservationsAddEditComponent implements OnInit {
   public roomList!: RoomsForSelect[];
   public reservationForm!: FormGroup;
   public idParameter: number | null;
+  public statusList = ['Confirmed', 'Checked In', 'Checked Out', 'Canceled'];
 
   private reservationIds = [999, 998];
+  private reservationToBeEdited!: ReservationInterface;
 
   constructor(
     private roomsService: RoomsService,
@@ -43,7 +45,7 @@ export class ReservationsAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createFormAndSetInitialValues();
+    this.createFormAndSetInitialProperties();
 
     if (this.idParameter) {
       this.setFormEditingValues(this.idParameter);
@@ -118,9 +120,9 @@ export class ReservationsAddEditComponent implements OnInit {
       reservationDoneAt: new Date(),
       checkInAt: this.reservationForm.controls['checkInAt'].value,
       checkOutAt: this.reservationForm.controls['checkOutAt'].value,
-      hasCheckedIn: false,
-      hasCheckedOut: false,
-      canceledReservationAt: null,
+      hasCheckedIn: this.reservationForm.controls['status'].value === this.statusList[1] || this.reservationForm.controls['status'].value === this.statusList[2],
+      hasCheckedOut: this.reservationForm.controls['status'].value === this.statusList[2],
+      canceledReservationAt: this.reservationForm.controls['status'].value === this.statusList[3] ? new Date() : null,
       reservedRoomId: this.reservationForm.controls['reservedRoomId'].value,
       reservedBy: clientForReservation!
     };
@@ -142,16 +144,42 @@ export class ReservationsAddEditComponent implements OnInit {
 
   private setFormEditingValues(id: number): void {
     this.reservationsService.getReservationById(id).pipe(first()).subscribe(response => {
+      this.reservationToBeEdited = response;
       this.reservationForm.patchValue({
-        reservedRoomId: response.reservedRoomId,
-        reservedBy: response.reservedBy.clientId,
-        checkInAt: response.checkInAt,
-        checkOutAt: response.checkOutAt
+        reservedRoomId: this.reservationToBeEdited.reservedRoomId,
+        reservedBy: this.reservationToBeEdited.reservedBy.clientId,
+        checkInAt: this.reservationToBeEdited.checkInAt,
+        checkOutAt: this.reservationToBeEdited.checkOutAt,
+        status: this.getReservationStatus(this.reservationToBeEdited)
       });
     });
   }
 
-  private createFormAndSetInitialValues() {
+  private getReservationStatus(reservation: ReservationInterface): string {
+    let status: string | undefined = '';
+    const hasCanceled = reservation.canceledReservationAt !== null;
+    const possibleStatusMap = new Map<string, string>([
+      ['hasCheckedIn', this.statusList[1]],
+      ['hasCheckedOut', this.statusList[2]],
+    ]);
+
+    Object.keys(reservation).forEach(key => {
+      if (reservation[key as keyof ReservationInterface] === true) {
+        status = key;
+      }
+    });
+
+    if (status === '' && hasCanceled) {
+      return this.statusList[3];
+    } else if (status === '') {
+      return this.statusList[0]
+    }
+
+    status = possibleStatusMap.get(status);
+    return status ? status : '';
+  }
+
+  private createFormAndSetInitialProperties() {
     this.getAutocompleteOptions('');
     this.roomsService.getAllRoomsForSelect().pipe(first()).subscribe(response => {
       this.roomList = response;
@@ -161,7 +189,8 @@ export class ReservationsAddEditComponent implements OnInit {
       reservedRoomId: [null, Validators.required],
       reservedBy: [null, Validators.required],
       checkInAt: ['', Validators.required],
-      checkOutAt: ['', Validators.required]
+      checkOutAt: ['', Validators.required],
+      status: ['']
     });
   }
 
@@ -185,6 +214,5 @@ export class ReservationsAddEditComponent implements OnInit {
       this.dateFormatData.display.dateA11yLabel = Constants.DATE_FORMATS.DDMMYYY.display.dateA11yLabel;
       this.dateFormatData.display.monthYearA11yLabel = Constants.DATE_FORMATS.DDMMYYY.display.monthYearA11yLabel;
     }
-    // this.changeDetection.detectChanges();
   }
 }

@@ -81,6 +81,9 @@ export class ReservationsService {
             reservation.checkInAt = updatedReservation.checkInAt;
             reservation.checkOutAt = updatedReservation.checkOutAt;
             reservation.reservationDoneAt = new Date();
+            reservation.hasCheckedIn = updatedReservation.hasCheckedIn;
+            reservation.hasCheckedOut = updatedReservation.hasCheckedOut;
+            reservation.canceledReservationAt = updatedReservation.canceledReservationAt;
             return reservation;
           }
         });

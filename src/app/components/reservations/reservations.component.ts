@@ -62,7 +62,7 @@ export class ReservationsComponent implements OnInit, OnDestroy {
     if (status === '' && hasCanceled) {
       return 'Canceled';
     } else if (status === '') {
-      return 'Ok'
+      return 'Confirmed'
     }
 
     status = possibleStatusMap.get(status);
