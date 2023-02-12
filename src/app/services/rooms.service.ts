@@ -81,4 +81,34 @@ export class RoomsService {
 
     return throwError(() => new Error('It was not possible to create the room. Try again later.'));
   }
+
+  public deleteRoom(id: number): Observable<RoomResponseInterface> {
+    const reservationToBeDeleteOnPage1 = this.roomsPage1.roomList.find(room => room.roomId === id);
+    const reservationToBeDeleteOnPage2 = this.roomsPage2.roomList.find(room => room.roomId === id);
+    const reservationToBeDeleteOnPage3 = this.roomsPage3.roomList.find(room => room.roomId === id);
+
+    if (reservationToBeDeleteOnPage1) {
+      this.roomsPage1.roomList = this.roomsPage1.roomList
+        .filter(room => room.roomId !== reservationToBeDeleteOnPage1.roomId);
+
+      if (this.roomsPage2.roomList.length) {
+        this.roomsPage1.roomList.push(this.roomsPage2.roomList[0]);
+        this.roomsPage2.roomList.slice(1, undefined);
+      }
+    } else if (reservationToBeDeleteOnPage2) {
+      this.roomsPage2.roomList = this.roomsPage2.roomList
+        .filter(room => room.roomId !== reservationToBeDeleteOnPage2.roomId);
+    } else if (reservationToBeDeleteOnPage3) {
+      this.roomsPage3.roomList = this.roomsPage3.roomList
+        .filter(room => room.roomId !== reservationToBeDeleteOnPage3.roomId);
+    } else {
+      return throwError(() => new Error('It was not possible to delete the room. Try again later.'));
+    }
+
+    this.roomsPage1.totalCount--;
+    this.roomsPage2.totalCount--;
+    this.roomsPage2.totalCount--;
+
+    return from([this.roomsPage1]);
+  }
 }

@@ -30,13 +30,19 @@ main {
     padding: 0;
 
     .mat-card-header {
+      align-items: flex-end;
       display: flex;
-      flex-direction: column;
-      margin-top: 14px;
+      height: 60px;
+      justify-content: space-between;
       width: 100%;
 
       .mat-card-subtitle {
         margin-bottom: 2px;
+      }
+
+      button {
+        align-self: center;
+        margin-right: 10px;
       }
     }
 

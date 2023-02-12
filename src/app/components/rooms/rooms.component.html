@@ -19,6 +19,9 @@
         <mat-card-header>
           <mat-card-title>{{ room.roomType }}</mat-card-title>
           <mat-card-subtitle>€{{ room.price }} per night</mat-card-subtitle>
+          <button mat-icon-button aria-label="Delete room button with a trash icon" (click)="delete(room.roomId)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </mat-card-header>
 
         <div class="divider">
