@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 
@@ -7,6 +8,7 @@ import { ClientInterface } from 'src/app/interfaces/client.interface';
 import { ReservationInterface } from 'src/app/interfaces/reservation.interface';
 import { RoomsForSelect } from 'src/app/interfaces/room.interface';
 import { ClientsService } from 'src/app/services/clients.service';
+import { DateFormatService } from 'src/app/services/date-format.service';
 import { ReservationsService } from 'src/app/services/reservations.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -23,7 +25,7 @@ export class ReservationsAddEditComponent implements OnInit {
   public reservationForm!: FormGroup;
   public idParameter: number | null;
 
-  private reservationIds = [999];
+  private reservationIds = [999, 998];
 
   constructor(
     private roomsService: RoomsService,
@@ -33,6 +35,9 @@ export class ReservationsAddEditComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private changeDetection: ChangeDetectorRef,
+    private dateFormatService: DateFormatService,
+    @Inject(MAT_DATE_FORMATS) private dateFormatData: any,
   ) {
     this.idParameter = Number(this.activatedRoute.snapshot.paramMap.get('id'));
   }
@@ -41,8 +46,12 @@ export class ReservationsAddEditComponent implements OnInit {
     this.createFormAndSetInitialValues();
 
     if (this.idParameter) {
-      this.setEditingValues(this.idParameter);
+      this.setFormEditingValues(this.idParameter);
     }
+
+    this.dateFormatService.listenToDateFormat().subscribe(dateFormat => {
+      this.setDateFormatForDatePicker(dateFormat);
+    });
   }
 
   public onInput(event: Event) {
@@ -94,6 +103,15 @@ export class ReservationsAddEditComponent implements OnInit {
     this.router.navigate([`${Constants.PATH.RESERVATIONS}`]);
   }
 
+  public getDateFormatString(): string {
+    if (this.dateFormatData.display.dateInput === Constants.DATE_FORMATS.YYYYMMDD.display.dateInput) {
+      return 'YYYY/MM/DD – YYYY/MM/DD';
+    } else if (this.dateFormatData.display.dateInput === Constants.DATE_FORMATS.DDMMYYY.display.dateInput) {
+      return 'DD/MM/YYYY – DD/MM/YYYY';
+    }
+    return '';
+  }
+
   private setReservationObject(): ReservationInterface {
     const clientForReservation = this.filteredClients.find(client => client.clientId === this.reservationForm.controls['reservedBy'].value);
     const newReservation: ReservationInterface = {
@@ -122,7 +140,7 @@ export class ReservationsAddEditComponent implements OnInit {
     });
   }
 
-  private setEditingValues(id: number): void {
+  private setFormEditingValues(id: number): void {
     this.reservationsService.getReservationById(id).pipe(first()).subscribe(response => {
       this.reservationForm.patchValue({
         reservedRoomId: response.reservedRoomId,
@@ -145,5 +163,28 @@ export class ReservationsAddEditComponent implements OnInit {
       checkInAt: ['', Validators.required],
       checkOutAt: ['', Validators.required]
     });
+  }
+
+  /*
+    Setting the entire object for the injectioned dateFormatData with the existing 'Constants.DATE_FORMATS.(...)' constant does not work.
+    So it is necessary to set its properties step by step.
+  */
+  private setDateFormatForDatePicker(dateFormat: string): void {
+    const year = Constants.DATE_FORMATS.YYYYMMDD.parse.dateInput;
+    const day = Constants.DATE_FORMATS.DDMMYYY.parse.dateInput;
+    if (dateFormat === year) {
+      this.dateFormatData.parse.dateInput = Constants.DATE_FORMATS.YYYYMMDD.parse.dateInput;
+      this.dateFormatData.display.dateInput = Constants.DATE_FORMATS.YYYYMMDD.display.dateInput;
+      this.dateFormatData.display.monthYearLabel = Constants.DATE_FORMATS.YYYYMMDD.display.monthYearLabel;
+      this.dateFormatData.display.dateA11yLabel = Constants.DATE_FORMATS.YYYYMMDD.display.dateA11yLabel;
+      this.dateFormatData.display.monthYearA11yLabel = Constants.DATE_FORMATS.YYYYMMDD.display.monthYearA11yLabel;
+    } else if (dateFormat === day) {
+      this.dateFormatData.parse.dateInput = Constants.DATE_FORMATS.DDMMYYY.parse.dateInput;
+      this.dateFormatData.display.dateInput = Constants.DATE_FORMATS.DDMMYYY.display.dateInput;
+      this.dateFormatData.display.monthYearLabel = Constants.DATE_FORMATS.DDMMYYY.display.monthYearLabel;
+      this.dateFormatData.display.dateA11yLabel = Constants.DATE_FORMATS.DDMMYYY.display.dateA11yLabel;
+      this.dateFormatData.display.monthYearA11yLabel = Constants.DATE_FORMATS.DDMMYYY.display.monthYearA11yLabel;
+    }
+    // this.changeDetection.detectChanges();
   }
 }

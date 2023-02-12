@@ -21,7 +21,7 @@
       <ng-container matColumnDef="reserved-at">
         <th mat-header-cell *matHeaderCellDef> Reserved at </th>
         <td mat-cell *matCellDef="let element" (click)="goToElementDetails(element.reservationId)">
-          {{element.reservationDoneAt}}
+          {{formatDate(element.reservationDoneAt)}}
         </td>
       </ng-container>
 

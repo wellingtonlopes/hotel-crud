@@ -16,6 +16,14 @@
     <div class="sidenav-item" routerLink="/reservations">Reservations</div>
     <div class="divider"></div>
     <div class="sidenav-item" routerLink="/reports">Hotel Status</div>
+    <div class="divider"></div>
+    <div class="button-container">
+      <button mat-button [matMenuTriggerFor]="menu">Date format</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="emitFormat(dayFirstFormat)">Format as DD/MM/YYYY</button>
+        <button mat-menu-item (click)="emitFormat(yearFirstFormat)">Format as YYYY/MM/DD</button>
+      </mat-menu>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
