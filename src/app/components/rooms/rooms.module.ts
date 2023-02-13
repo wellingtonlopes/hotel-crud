@@ -8,7 +8,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RoomsComponent } from './rooms.component';
 import { roomsRouter } from './rooms.router';
 import { RoomDetailsDialogComponent } from './room-details-dialog/room-details-dialog.component';
-import { RoomsService } from 'src/app/services/rooms.service';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { RoomsAddComponent } from './rooms-add/rooms-add.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,9 +33,6 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     ReactiveFormsModule,
     MatInputModule,
-  ],
-  providers: [
-    RoomsService
   ]
 })
 
