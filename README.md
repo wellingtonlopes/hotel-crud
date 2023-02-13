@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Installing dependencies
 
-Run `npm install` while in the project folder, within the development branch. Make sure you also have angular-moment installed - run `npm i @angular/material-moment-adapter@14 --save`.
+Run `npm install` while in the project folder, within the development branch. Make sure you also have material-moment-adapter installed - run `npm i @angular/material-moment-adapter@14 --save`.
 
 ## Development server
 
