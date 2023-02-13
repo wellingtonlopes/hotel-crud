@@ -6,9 +6,13 @@
 <div class="form-wrapper">
   <form [formGroup]="reservationForm">
     <mat-form-field class="form-field" appearance="fill">
-      <mat-label>Type the client name</mat-label>
+      <mat-label>You may search for a name of an existing client</mat-label>
       <input type="text" placeholder="Choose one" aria-label="Name of registered clients" matInput
         formControlName="reservedBy" [matAutocomplete]="auto" (input)="onInput($event)">
+      <mat-error
+        *ngIf="reservationForm.controls['reservedBy'].hasError('pattern') && !reservationForm.controls['reservedBy'].hasError('required')">
+        Please search for an existing user and select them from the list
+      </mat-error>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="autocompleteDisplayItem.bind(this)">
         <mat-option *ngFor="let client of filteredClients" [value]="client.clientId">
           {{client.firstName}} {{client.lastName}}

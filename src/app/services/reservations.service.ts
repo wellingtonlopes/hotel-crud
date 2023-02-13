@@ -10,10 +10,12 @@ import { MOCKED_RESERVATIONS_PAGE_1, MOCKED_RESERVATIONS_PAGE_2 } from '../share
 export class ReservationsService {
   private reservationListPage1: ReservationResponse;
   private reservationListPage2: ReservationResponse;
+  static lastUsedReservationId: number;
 
   constructor() {
     this.reservationListPage1 = JSON.parse(MOCKED_RESERVATIONS_PAGE_1) as ReservationResponse;
     this.reservationListPage2 = JSON.parse(MOCKED_RESERVATIONS_PAGE_2) as ReservationResponse;
+    ReservationsService.lastUsedReservationId = this.reservationListPage2.reservationList[this.reservationListPage2.reservationList.length - 1].reservationId!;
   }
 
   public getReservations(pageIndex: number): Observable<ReservationResponse> {
@@ -35,6 +37,7 @@ export class ReservationsService {
       this.reservationListPage2.reservationList.push(reservation);
       this.reservationListPage2.totalCount++;
       this.reservationListPage1.totalCount++;
+      ReservationsService.lastUsedReservationId++
       return from([200]);
     }
 

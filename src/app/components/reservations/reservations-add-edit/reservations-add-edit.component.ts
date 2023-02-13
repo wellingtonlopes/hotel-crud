@@ -128,7 +128,7 @@ export class ReservationsAddEditComponent implements OnInit {
     };
 
     if (!this.idParameter) {
-      newReservation.reservationId = this.reservationIds.length > 0 ? this.reservationIds.pop()! : 1000;
+      newReservation.reservationId = ReservationsService.lastUsedReservationId + 1;
     } else {
       newReservation.reservationId = this.idParameter;
     }
@@ -187,7 +187,7 @@ export class ReservationsAddEditComponent implements OnInit {
 
     this.reservationForm = this.formBuilder.group({
       reservedRoomId: [null, Validators.required],
-      reservedBy: [null, Validators.required],
+      reservedBy: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
       checkInAt: ['', Validators.required],
       checkOutAt: ['', Validators.required],
       status: ['']
