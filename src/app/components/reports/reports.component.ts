@@ -17,6 +17,8 @@ export class ReportsComponent implements OnInit {
   public barChartOptions!: ChartConfiguration<'bar'>['options'];
 
   private roomDataSets!: RoomReport[];
+  private readonly backgroundColors = ['#072F5F', '#1261A0', '#3895D3', '#58CCED'];
+  private readonly borderWidth = 1
 
   constructor(private readonly reportsService: ReportsService) { }
 
@@ -32,10 +34,10 @@ export class ReportsComponent implements OnInit {
     this.barChartData = {
       labels: ['last 12 months', 'last 6 months', 'last 3 months'],
       datasets: [
-        { data: chartData[0].data, label: chartData[0].dataSet },
-        { data: chartData[1].data, label: chartData[1].dataSet },
-        { data: chartData[2].data, label: chartData[2].dataSet },
-        { data: chartData[3].data, label: chartData[3].dataSet }
+        { data: chartData[0].data, label: chartData[0].dataSet, backgroundColor: this.backgroundColors[0], borderWidth: this.borderWidth },
+        { data: chartData[1].data, label: chartData[1].dataSet, backgroundColor: this.backgroundColors[1], borderWidth: this.borderWidth },
+        { data: chartData[2].data, label: chartData[2].dataSet, backgroundColor: this.backgroundColors[2], borderWidth: this.borderWidth },
+        { data: chartData[3].data, label: chartData[3].dataSet, backgroundColor: this.backgroundColors[3], borderWidth: this.borderWidth }
       ]
     };
   }
