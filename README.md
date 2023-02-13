@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.10.
 
+## Installing dependencies
+
+Run `npm install` while in the project folder, within the development branch. Make sure you also have material-moment-adapter installed - run `npm i @angular/material-moment-adapter@14 --save`.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
