@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Constants } from '../shared/contants';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +17,7 @@ export class DateFormatService {
 
     this.listenToDateFormat().subscribe(dateFormat => {
       localStorage.setItem('dateFormat', dateFormat);
-      console.log(formatData);
-    })
+    });
   }
 
   public listenToDateFormat(): Observable<string> {
